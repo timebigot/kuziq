@@ -24,7 +24,6 @@ def index(request):
     albums = []
     streams = []
     dl_links = []
-    lyrics = []
     
     for song in songs:
         
@@ -58,7 +57,6 @@ def index(request):
         streams.append(stream)
         dl_links.append(dl_link)
         
-    urllib.request.urlretrieve(url, 'test.mp3')
     context = {'songs': zip(titles, thumbs, thumbs_orig, artists, albums, streams, dl_links)}
     
     return render(request, 'base/index.html', context)
