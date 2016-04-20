@@ -13,7 +13,7 @@ def index(request):
     con = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(con, 'html.parser')
     sel = '#CHARTrealtime > table > tbody > tr'
-    songs = soup.select(sel)[0:10]
+    songs = soup.select(sel)[0:100]
 
     titles = []
     thumbs = []
@@ -66,13 +66,14 @@ def stream(request):
         #dl_link = res.geturl()
 
     return HttpResponse(stream)
+
 def search(request):
 
     if request.method == 'GET':
         query = request.GET['q']
 
     url = 'http://search.bugs.co.kr/track?q=' + query
-    con = urllib.request.urlopen(url).read()
+    con = urllib.request.urlopen(url).read().decode('utf-8')
     soup = BeautifulSoup(con, 'html.parser')
     sel = '#DEFAULT0 > table > tbody > tr'
     songs = soup.select(sel)[0:10]
