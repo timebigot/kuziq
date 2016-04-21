@@ -73,6 +73,7 @@ def search(request):
         query = request.GET['q']
 
     query = query.replace(' ', '%20')
+    # need to url encode to work (for some reason)
     query = urllib.parse.quote(query)
 
     url = 'http://search.bugs.co.kr/track?q=' + query
