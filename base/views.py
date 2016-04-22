@@ -6,7 +6,7 @@ import urllib.request
 import re
 import sys
 import soundcloud
-import youtube
+import msearch
 
 def index(request):
 
@@ -51,19 +51,8 @@ def stream(request):
         artist = request.GET['artist']
         title = request.GET['title']
 
-        client_id = 'af6ef05f45065af007e4763a222c2619'
-        client = soundcloud.Client(client_id=client_id)
-
-    tracks = client.get('/tracks', q=title + ' ' + artist)
-
-    if tracks:
-        sc_stream = tracks[0].stream_url
-        sc_title = tracks[0].title
-        stream = sc_stream + '?client_id=' + client_id
-        stream = ''
-
-    query = title + ' ' + artist + ' ' + 'audio'
-    stream = youtube.getaudio(query)
+    query = title + ' ' + artist
+    stream = msearch.getaudio(query)
 
     return HttpResponse(stream)
 
@@ -72,7 +61,6 @@ def search(request):
     if request.method == 'GET':
         query = request.GET['q']
 
-    query = query.replace(' ', '%20')
     # need to url encode to work (for some reason)
     query = urllib.parse.quote(query)
 
@@ -90,7 +78,12 @@ def search(request):
 
     for song in songs:
 
-        title = song.find('p', class_='title').find('a').string
+        title = song.find('p', class_='title').find('a')
+        # temp patch: some values come up as empty aka notype
+        if not title:
+            title = 'Unknown'
+        else:
+            title = title.string
 
         thumb_raw = song.find('a', class_='thumbnail').find('img')['src']
         thumb = re.sub(r'\/50\/', '/100/', thumb_raw)
