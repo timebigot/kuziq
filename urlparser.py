@@ -18,7 +18,7 @@ def bugs(url, sel):
 
     for song in songs:
 
-        title = song.find('p', class_='title').find('a').string
+        title = song.find('p', class_='title').find('a')
         # temp patch: some values come up as empty aka notype
         if not title:
             title = 'Unknown'
