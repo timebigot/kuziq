@@ -4,8 +4,7 @@
         <title>Kuziq</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        {% load staticfiles %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/kuziq.css') }}">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -31,7 +30,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <ul class="list-group">
-                        {% for title, thumb, thumb_orig, artist, album, stream, dl_link in songs %}
+                        {% for title, thumb, thumb_orig, artist, album in songs %}
                         <li class="list-group-item">
                             <div class="media">
                                 <div class="media-left">
@@ -75,7 +74,7 @@
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/stream.js' %}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/stream.js') }}"></script>
 
     </body>
 </html>
